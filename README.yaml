@@ -5,13 +5,13 @@
 #
 
 # Name of this project
-name: Terraform AWS AMPLIFY-APP
+name: Terraform AWS AMPLIFY
 
 # License of this project
 license: "APACHE"
 
 # Canonical GitHub repo
-github_repo: clouddrove/terraform-aws-amplify-app
+github_repo: clouddrove/terraform-aws-amplify
 
 # Badges to display
 badges:
@@ -22,11 +22,11 @@ badges:
     image: "https://img.shields.io/badge/License-APACHE-blue.svg"
     url: "LICENSE.md"
   - name: "tfsec"
-    image: "https://github.com/clouddrove/terraform-aws-amplify-app/actions/workflows/tfsec.yml/badge.svg"
-    url: "https://github.com/clouddrove/terraform-aws-amplify-app/actions/workflows/tfsec.yml"
+    image: "https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/tfsec.yml/badge.svg"
+    url: "https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/tfsec.yml"
   - name: "static-checks"
-    image: "https://github.com/clouddrove/terraform-aws-amplify-app/actions/workflows/terraform.yml/badge.svg"
-    url: "https://github.com/clouddrove/terraform-aws-amplify-app/actions/workflows/terraform.yml"
+    image: "https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/terraform.yml/badge.svg"
+    url: "https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/terraform.yml"
 
 #  description of this project
 # yamllint disable rule:line-length
@@ -53,7 +53,7 @@ usage: |-
      amplify_enabled        = true
      environment_name       = "prod"
      domain_name            = ["newloop.eu", "newloop.dk"]
-     amplify_repository     =  "https://github.com/clouddrove-sandbox/terraform-aws-amplify-app"
+     amplify_repository     =  "https://github.com/clouddrove-sandbox/terraform-aws-amplify"
      access_token           = "ghxxxxxm06Sd3KqkafBVu0xzcxcxcv0EA8AK"
      amplify_branch_name    = "main"
      sub_domain_prefix_name = "scan"
