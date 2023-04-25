@@ -48,7 +48,7 @@ resource "aws_amplify_app" "example" {
 
   environment_variables = var.amplify_app_environment_variables
   access_token          = var.access_token
-  tags                             = module.labels.tags
+  tags                  = module.labels.tags
 }
 
 resource "aws_amplify_backend_environment" "example" {
@@ -71,7 +71,7 @@ resource "aws_amplify_branch" "main" {
   stage     = var.branch_stage
 
   environment_variables = var.branch_environment_variables
-  tags                             = module.labels.tags
+  tags                  = module.labels.tags
 }
 
 resource "aws_amplify_domain_association" "example" {
