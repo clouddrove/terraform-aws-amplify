@@ -4,11 +4,11 @@
 
 
 <h1 align="center">
-    Terraform AWS Pritunl
+    Terraform AWS amplify-app
 </h1>
 
 <p align="center" style="font-size: 1.2rem;"> 
-    Terraform module to create an pritunl resource on AWS with ElasticC IP Addresses and Elastic Block Store.
+    Terraform module to provision AWS Amplify apps, backend environments, branches, domain associations, and webhooks.
      </p>
 
 <p align="center">
@@ -19,24 +19,24 @@
 <a href="LICENSE.md">
   <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
 </a>
-<a href="https://github.com/clouddrove/terraform-aws-pritunl/actions/workflows/tfsec.yml">
-  <img src="https://github.com/clouddrove/terraform-aws-pritunl/actions/workflows/tfsec.yml/badge.svg" alt="tfsec">
+<a href="https://github.com/clouddrove/terraform-aws-amplify-app/actions/workflows/tfsec.yml">
+  <img src="https://github.com/clouddrove/terraform-aws-amplify-app/actions/workflows/tfsec.yml/badge.svg" alt="tfsec">
 </a>
-<a href="https://github.com/clouddrove/terraform-aws-pritunl/actions/workflows/terraform.yml">
-  <img src="https://github.com/clouddrove/terraform-aws-pritunl/actions/workflows/terraform.yml/badge.svg" alt="static-checks">
+<a href="https://github.com/clouddrove/terraform-aws-amplify-app/actions/workflows/terraform.yml">
+  <img src="https://github.com/clouddrove/terraform-aws-amplify-app/actions/workflows/terraform.yml/badge.svg" alt="static-checks">
 </a>
 
 
 </p>
 <p align="center">
 
-<a href='https://facebook.com/sharer/sharer.php?u=https://github.com/clouddrove/terraform-aws-pritunl'>
+<a href='https://facebook.com/sharer/sharer.php?u=https://github.com/clouddrove/terraform-aws-amplify-app'>
   <img title="Share on Facebook" src="https://user-images.githubusercontent.com/50652676/62817743-4f64cb80-bb59-11e9-90c7-b057252ded50.png" />
 </a>
-<a href='https://www.linkedin.com/shareArticle?mini=true&title=Terraform+AWS+Pritunl&url=https://github.com/clouddrove/terraform-aws-pritunl'>
+<a href='https://www.linkedin.com/shareArticle?mini=true&title=Terraform+AWS+amplify-app&url=https://github.com/clouddrove/terraform-aws-amplify-app'>
   <img title="Share on LinkedIn" src="https://user-images.githubusercontent.com/50652676/62817742-4e339e80-bb59-11e9-87b9-a1f68cae1049.png" />
 </a>
-<a href='https://twitter.com/intent/tweet/?text=Terraform+AWS+Pritunl&url=https://github.com/clouddrove/terraform-aws-pritunl'>
+<a href='https://twitter.com/intent/tweet/?text=Terraform+AWS+amplify-app&url=https://github.com/clouddrove/terraform-aws-amplify-app'>
   <img title="Share on Twitter" src="https://user-images.githubusercontent.com/50652676/62817740-4c69db00-bb59-11e9-8a79-3580fbbf6d5c.png" />
 </a>
 
@@ -71,53 +71,46 @@ This module has a few dependencies:
 ## Examples
 
 
-**IMPORTANT:** Since the `master` branch used in `source` varies based on new modifications, we suggest that you use the release versions [here](https://github.com/clouddrove/terraform-aws-pritunl/releases).
+**IMPORTANT:** Since the `master` branch used in `source` varies based on new modifications, we suggest that you use the release versions [here](https://github.com/clouddrove/terraform-aws-amplify-app/releases).
 
 
-Here is examples of how you can use this module in your inventory structure:
-### Example
-```hcl
-    module "pritunl" {
-source      = "./../"
-version     = "1.3.0"
-name        = "pritunl"
-environment = "test"
-label_order = ["name", "environment"]
+### Simple Example
+Here is an example of how you can use this module in your inventory structure:
+  ```hcl
+  module "amplify" {
+   source = "../"
 
-#instance
-pritunl_enabled = true
-ami             = "ami-0a8e758f5e873d1c1"
-instance_type   = "t2.medium"
-monitoring      = false
-tenancy         = "default"
+   name        = "amplify"
+   environment = "test"
+   label_order = ["name", "environment"]
 
-#Networking
-vpc_security_group_ids_list = [module.ssh.security_group_ids, module.http-https.security_group_ids, module.vpn_sg.security_group_ids]
-subnet_ids                  = tolist(module.public_subnets.public_subnet_id)
-assign_eip_address          = true
-associate_public_ip_address = true
+   amplify_enabled        = true
+   environment_name       = "prod"
+   domain_name            = ["newloop.eu", "newloop.dk"]
+   amplify_repository     =  "https://github.com/clouddrove-sandbox/terraform-aws-amplify-app"
+   access_token           = "ghxxxxxm06Sd3KqkafBVu0xzcxcxcv0EA8AK"
+   amplify_branch_name    = "main"
+   sub_domain_prefix_name = "scan"
+   deployment_artifacts   = "app-example-deployment"
+   stack_name             = "amplify-app-example"
+   branch_framework       = "React"
+   branch_stage           = "PRODUCTION"
+   branch_environment_variables = {
+   ENV = "test"
+   }
+   amplify_app_environment_variables = {
+   REACT_APP_API_SERVER = ""
+   }
 
-#Keypair
-key_name = module.keypair.name
-
-#IAM
-instance_profile_enabled = true
-iam_instance_profile     = module.iam-role.name
-
-#Root Volume
-root_block_device = [
-  {
-    volume_type           = "gp2"
-    volume_size           = 20
-    delete_on_termination = true
-    kms_key_id            = module.kms_key.key_arn
+   custom_rules = [
+   {
+   source = "/01/<p01>/21/<p21>"
+   status = "302"
+   target = "/?p01=<p01>&p21=<p21> "
+   }
+   ]
   }
-]
-
-#user data
-user_data = file("${path.module}/pritunl.sh")
-  }
-```
+  ```
 
 
 
@@ -128,64 +121,32 @@ user_data = file("${path.module}/pritunl.sh")
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| ami | The AMI to use for the instance. | `string` | `""` | no |
-| assign\_eip\_address | Assign an Elastic IP address to the instance. | `bool` | `false` | no |
-| associate\_public\_ip\_address | Associate a public IP address with the instance. | `bool` | `true` | no |
-| attributes | Additional attributes (e.g. `1`). | `list(any)` | `[]` | no |
-| availability\_zone | Availability Zone the instance is launched in. If not set, will be launched in the first AZ of the region. | `list(any)` | `[]` | no |
-| cpu\_core\_count | Sets the number of CPU cores for an instance. | `string` | `null` | no |
-| cpu\_credits | The credit option for CPU usage. Can be `standard` or `unlimited`. T3 instances are launched as unlimited by default. T2 instances are launched as standard by default. | `string` | `"standard"` | no |
-| delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes`. | `string` | `"-"` | no |
-| disable\_api\_termination | If true, enables EC2 Instance Termination Protection. | `bool` | `false` | no |
-| dns\_enabled | Flag to control the dns\_enable. | `bool` | `false` | no |
-| dns\_zone\_id | The Zone ID of Route53. | `string` | `""` | no |
-| ebs\_block\_device | Additional EBS block devices to attach to the instance. | `list(any)` | `[]` | no |
-| ebs\_device\_name | Name of the EBS device to mount. | `list(string)` | <pre>[<br>  "/dev/xvdb",<br>  "/dev/xvdc",<br>  "/dev/xvdd",<br>  "/dev/xvde",<br>  "/dev/xvdf",<br>  "/dev/xvdg",<br>  "/dev/xvdh",<br>  "/dev/xvdi",<br>  "/dev/xvdj",<br>  "/dev/xvdk",<br>  "/dev/xvdl",<br>  "/dev/xvdm",<br>  "/dev/xvdn",<br>  "/dev/xvdo",<br>  "/dev/xvdp",<br>  "/dev/xvdq",<br>  "/dev/xvdr",<br>  "/dev/xvds",<br>  "/dev/xvdt",<br>  "/dev/xvdu",<br>  "/dev/xvdv",<br>  "/dev/xvdw",<br>  "/dev/xvdx",<br>  "/dev/xvdy",<br>  "/dev/xvdz"<br>]</pre> | no |
-| ebs\_iops | Amount of provisioned IOPS. This must be set with a volume\_type of io1. | `number` | `0` | no |
-| ebs\_optimized | If true, the launched EC2 instance will be EBS-optimized. | `bool` | `false` | no |
-| ebs\_volume\_enabled | Flag to control the ebs creation. | `bool` | `false` | no |
-| ebs\_volume\_size | Size of the EBS volume in gigabytes. | `number` | `30` | no |
-| ebs\_volume\_type | The type of EBS volume. Can be standard, gp2 or io1. | `string` | `"gp2"` | no |
+| access\_token | Personal access token for a third-party source | `string` | `"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"` | no |
+| amplify\_app\_environment\_variables | The environment variables for the Amplify app | `map(string)` | `{}` | no |
+| amplify\_branch\_name | Name for the branch. | `string` | `"test"` | no |
+| amplify\_enabled | Flag to control the amplify creation. | `bool` | `true` | no |
+| amplify\_repository | The repository for the Amplify app | `string` | `"https://github.com/clouddrove-sandbox/terraform-aws-amplify-app"` | no |
+| branch\_environment\_variables | The environment variables for the Amplify app | `map(string)` | `{}` | no |
+| branch\_framework | Framework for the branch. | `string` | `"React"` | no |
+| branch\_stage | Describes the current stage for the branch. Valid values: PRODUCTION, BETA, DEVELOPMENT, EXPERIMENTAL, PULL\_REQUEST. | `string` | `"PRODUCTION"` | no |
+| custom\_rules | The custom rules to apply to the Amplify App | <pre>list(object({<br>    condition = optional(string)<br>    source    = string<br>    status    = optional(string)<br>    target    = string<br>  }))</pre> | `[]` | no |
+| deployment\_artifacts | Name of deployment artifacts. | `string` | `"app-example-deployment"` | no |
+| domain\_name | Domain name for the domain association. | `list(any)` | `[]` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
-| ephemeral\_block\_device | Customize Ephemeral (also known as Instance Store) volumes on the instance. | `list(any)` | `[]` | no |
-| host\_id | The Id of a dedicated host that the instance will be assigned to. Use when an instance is to be launched on a specific dedicated host. | `string` | `null` | no |
-| hostname | DNS records to create. | `string` | `""` | no |
-| iam\_instance\_profile | The IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile. | `string` | `""` | no |
-| instance\_count | Number of instances to launch. | `number` | `1` | no |
-| instance\_initiated\_shutdown\_behavior | n/a | `string` | `"terminate"` | no |
-| instance\_profile\_enabled | Flag to control the instance profile creation. | `bool` | `false` | no |
-| instance\_tags | Instance tags. | `map(any)` | `{}` | no |
-| instance\_type | The type of instance to start. Updates to this field will trigger a stop/start of the EC2 instance. | `string` | n/a | yes |
-| ipv6\_address\_count | Number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet. | `number` | `null` | no |
-| ipv6\_addresses | List of IPv6 addresses from the range of the subnet to associate with the primary network interface. | `list(any)` | `null` | no |
-| key\_name | The key name to use for the instance. | `string` | `""` | no |
-| kms\_key\_id | The ARN for the KMS encryption key. When specifying kms\_key\_id, encrypted needs to be set to true. | `string` | `""` | no |
+| environment\_name | Amplify environment name for the pull request. | `string` | `"prod"` | no |
 | label\_order | Label order, e.g. `name`,`application`. | `list(any)` | `[]` | no |
-| managedby | ManagedBy, eg 'CloudDrove'. | `string` | `"hello@clouddrove.com"` | no |
-| monitoring | If true, the launched EC2 instance will have detailed monitoring enabled. (Available since v0.6.0). | `bool` | `true` | no |
+| managedby | ManagedBy, eg 'CloudDrove' | `string` | `"hello@clouddrove.com"` | no |
 | name | Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
-| network\_interface | Customize network interfaces to be attached at instance boot time | `list(map(string))` | `[]` | no |
-| placement\_group | The Placement Group to start the instance in. | `string` | `""` | no |
-| pritunl\_enabled | Flag to control the instance creation. | `bool` | `true` | no |
-| repository | Terraform current module repo | `string` | `"https://github.com/clouddrove/terraform-aws-pritunl"` | no |
-| root\_block\_device | Customize details about the root block device of the instance. See Block Devices below for details. | `list(any)` | `[]` | no |
-| source\_dest\_check | Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs. | `bool` | `true` | no |
-| subnet | VPC Subnet ID the instance is launched in. | `string` | `null` | no |
-| subnet\_ids | A list of VPC Subnet IDs to launch in. | `list(string)` | `[]` | no |
-| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(any)` | `{}` | no |
-| tenancy | The tenancy of the instance (if the instance is running in a VPC). An instance with a tenancy of dedicated runs on single-tenant hardware. The host tenancy is not supported for the import-instance command. | `string` | `"default"` | no |
-| ttl | The TTL of the record to add to the DNS zone to complete certificate validation. | `string` | `"300"` | no |
-| type | Type of DNS records to create. | `string` | `"CNAME"` | no |
-| user\_data | (Optional) A string of the desired User Data for the ec2. | `string` | `""` | no |
-| vpc\_security\_group\_ids\_list | A list of security group IDs to associate with. | `list(string)` | `[]` | no |
+| stack\_name | AWS CloudFormation stack name of a backend environment. | `string` | `"amplify-app-example"` | no |
+| sub\_domain\_prefix\_name | Prefix setting for the subdomain. | `string` | `"scam"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| instance\_id | The instance ID. |
-| private\_ip | Private IP of instance. |
-| tags | The instance tags. |
+| arn | Amplify App ARN |
+| default\_domain | Amplify App domain (non-custom) |
+| name | Amplify App name |
 
 
 
@@ -201,9 +162,9 @@ You need to run the following command in the testing folder:
 
 
 ## Feedback 
-If you come accross a bug or have any feedback, please log it in our [issue tracker](https://github.com/clouddrove/terraform-aws-pritunl/issues), or feel free to drop us an email at [hello@clouddrove.com](mailto:hello@clouddrove.com).
+If you come accross a bug or have any feedback, please log it in our [issue tracker](https://github.com/clouddrove/terraform-aws-amplify-app/issues), or feel free to drop us an email at [hello@clouddrove.com](mailto:hello@clouddrove.com).
 
-If you have found it worth your time, go ahead and give us a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-pritunl)!
+If you have found it worth your time, go ahead and give us a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-amplify-app)!
 
 ## About us
 
