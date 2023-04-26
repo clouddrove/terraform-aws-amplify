@@ -8,7 +8,7 @@
 </h1>
 
 <p align="center" style="font-size: 1.2rem;"> 
-    Terraform module to create an amplify resource on AWS with ElasticC IP Addresses and Elastic Block Store.
+    Terraform module to provision AWS Amplify apps, backend environments, branches, domain associations, and webhooks.
      </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
 <a href="LICENSE.md">
   <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
 </a>
-<a href="https://github.com/clouddrove/terraform-aws-amplifyactions/workflows/tfsec.yml">
+<a href="https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/tfsec.yml">
   <img src="https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/tfsec.yml/badge.svg" alt="tfsec">
 </a>
 <a href="https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/terraform.yml">
