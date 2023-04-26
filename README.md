@@ -8,7 +8,7 @@
 </h1>
 
 <p align="center" style="font-size: 1.2rem;"> 
-    Terraform module to provision AWS Amplify apps, backend environments, branches, domain associations, and webhooks.
+    Terraform module to create an amplify resource on AWS with ElasticC IP Addresses and Elastic Block Store.
      </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
 <a href="LICENSE.md">
   <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
 </a>
-<a href="https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/tfsec.yml">
+<a href="https://github.com/clouddrove/terraform-aws-amplifyactions/workflows/tfsec.yml">
   <img src="https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/tfsec.yml/badge.svg" alt="tfsec">
 </a>
 <a href="https://github.com/clouddrove/terraform-aws-amplify/actions/workflows/terraform.yml">
@@ -79,11 +79,9 @@ Here is an example of how you can use this module in your inventory structure:
   ```hcl
   module "amplify" {
    source = "../"
-
    name        = "amplify"
    environment = "test"
    label_order = ["name", "environment"]
-
    amplify_enabled        = true
    environment_name       = "prod"
    domain_name            = ["newloop.eu", "newloop.dk"]
@@ -101,7 +99,6 @@ Here is an example of how you can use this module in your inventory structure:
    amplify_app_environment_variables = {
    REACT_APP_API_SERVER = ""
    }
-
    custom_rules = [
    {
    source = "/01/<p01>/21/<p21>"
