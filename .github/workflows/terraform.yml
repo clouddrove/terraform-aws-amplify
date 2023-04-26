@@ -31,7 +31,8 @@ jobs:
           - ${{ needs.versionExtract.outputs.minVersion }}
           - ${{ needs.versionExtract.outputs.maxVersion }}
         directory:
-          - _example/
+          - _example/basic_example
+          - _example/ebs_mount
 
     steps:
       - name: Checkout
@@ -55,6 +56,7 @@ jobs:
           terraform init
           terraform validate
           terraform plan -input=false -no-color
+
       - name: tflint
         uses: reviewdog/action-tflint@master
         with:
