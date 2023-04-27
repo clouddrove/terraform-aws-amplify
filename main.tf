@@ -93,7 +93,6 @@ resource "aws_amplify_domain_association" "example" {
     branch_name = join("", aws_amplify_branch.main.*.branch_name)
     prefix      = var.sub_domain_prefix_name
   }
-
 }
 
 resource "aws_amplify_webhook" "master" {
