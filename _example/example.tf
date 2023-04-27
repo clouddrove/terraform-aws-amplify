@@ -11,8 +11,8 @@ module "amplify" {
 
   amplify_enabled        = true
   environment_name       = "prod"
-  domain_name            = ["newloop.eu", "newloop.dk"]
-  amplify_repository     = "https://github.com/clouddrove-sandbox/terraform-aws-amplify-app"
+  domain_name            = ["test.eu", "test.dk"]
+  amplify_repository     = "https://github.com/clouddrove/terraform-aws-amplify"
   access_token           = "ghxxxxxm06Sd3KqkafBVu0xzcxcxcv0EA8AK"
   amplify_branch_name    = "main"
   sub_domain_prefix_name = "scan"
@@ -20,11 +20,15 @@ module "amplify" {
   stack_name             = "amplify-app-example"
   branch_framework       = "React"
   branch_stage           = "PRODUCTION"
+
+  # Environment variables for the autocreated branch.
   branch_environment_variables = {
-    ENV = "test"
+    REACT_APP_API_SERVER = "https://api.example.com"
+
   }
+  # Environment variables for the branch.
   amplify_app_environment_variables = {
-    REACT_APP_API_SERVER = ""
+    ENV = "test"
   }
 
   custom_rules = [
