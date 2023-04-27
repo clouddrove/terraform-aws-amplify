@@ -19,7 +19,6 @@ jobs:
       minVersion: ${{ steps.minMax.outputs.minVersion }}
       maxVersion: ${{ steps.minMax.outputs.maxVersion }}
 
-
   versionEvaluate:
     name: Evaluate Terraform versions
     runs-on: ubuntu-latest
@@ -31,8 +30,7 @@ jobs:
           - ${{ needs.versionExtract.outputs.minVersion }}
           - ${{ needs.versionExtract.outputs.maxVersion }}
         directory:
-          - _example/basic_example
-          - _example/ebs_mount
+          - _example/
 
     steps:
       - name: Checkout
