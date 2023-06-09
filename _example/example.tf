@@ -5,8 +5,8 @@ provider "aws" {
 module "amplify" {
   source = "../"
 
-  name        = "test"
-  environment = "amplify"
+  name        = "amplify"
+  environment = "test"
   label_order = ["name", "environment"]
 
   amplify_enabled  = true
@@ -32,8 +32,6 @@ module "amplify" {
   access_token           = "ghp_xxxxxjq0mUrbxxxxxxxuqxh4pxxxxxxx192m"
   sub_domain_prefix_name = "scan"
   deployment_artifacts   = "app-example-deployment"
-  branch_framework       = "Web"
-  branch_stage           = "PRODUCTION"
   ttl                    = 5
   build_spec             = <<-EOT
     version: 1
