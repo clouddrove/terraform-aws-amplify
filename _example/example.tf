@@ -6,7 +6,7 @@ module "amplify" {
   source = "../"
 
   name        = "amplify"
-  environment = "test"
+  environment = "test2"
   label_order = ["name", "environment"]
 
   amplify_enabled  = true
@@ -17,7 +17,7 @@ module "amplify" {
     # Enable auto build for the created branches
     enable_auto_build = true
   }
-  enable_auto_branch_creation = false
+  enable_auto_branch_creation = true
   enable_basic_auth           = false
   enable_branch_auto_build    = true
   enable_branch_auto_deletion = true
@@ -27,9 +27,9 @@ module "amplify" {
     "*/**"
   ]
 
-  domain_name            = ["test-example.com", "www.test-example.com"]
-  amplify_repository     = "https://github.com/nileshgadgi/gitrepo"
-  access_token           = "ghp_xxxxxjq0mUrbxxxxxxxuqxh4pxxxxxxx192m"
+  # domain_name            = ["test-example.com", "www.test-example.com"]
+  amplify_repository     = "https://github.com/clouddrove/terraform-aws-amplify"
+  access_token           = "ghp_xxxxtjq0xxxxxxxoLIMuxxxxxxBJg70txxxx"
   sub_domain_prefix_name = "scan"
   deployment_artifacts   = "app-example-deployment"
   ttl                    = 5
