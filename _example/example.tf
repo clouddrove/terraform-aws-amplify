@@ -6,7 +6,7 @@ module "amplify" {
   source = "../"
 
   name        = "amplify"
-  environment = "test2"
+  environment = "test"
   label_order = ["name", "environment"]
 
   amplify_enabled  = true
