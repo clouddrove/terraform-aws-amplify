@@ -28,8 +28,8 @@ module "amplify" {
   ]
 
   # domain_name            = ["test-example.com", "www.test-example.com"]
-  amplify_repository     = "https://github.com/clouddrove/terraform-aws-amplify"  // The repository for the Amplify app
-  access_token           = "ghp_xxxxtjq0xxxxxxxoLIMuxxxxxxBJg70txxxx"             // The github access token
+  amplify_repository     = "https://github.com/clouddrove/terraform-aws-amplify" // The repository for the Amplify app
+  access_token           = "ghp_xxxxtjq0xxxxxxxoLIMuxxxxxxBJg70txxxx"            // The github access token
   sub_domain_prefix_name = "scan"
   deployment_artifacts   = "app-example-deployment"
   ttl                    = 5

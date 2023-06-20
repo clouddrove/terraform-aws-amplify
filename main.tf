@@ -75,16 +75,17 @@ resource "aws_amplify_backend_environment" "example" {
 resource "aws_amplify_branch" "main" {
   count = var.amplify_enabled ? 1 : 0
 
-  app_id                = join("", aws_amplify_app.example.*.id)
-  branch_name           = var.branches.branch_name
-  display_name          = var.branches.display_name
-  description           = var.branches.description
-  framework             = var.branches.framework
-  stage                 = var.branches.stage
-  enable_auto_build     = var.branches.enable_auto_build
-  ttl                   = var.branches.ttl
-  environment_variables = var.branches.environment_variables
-  tags                  = module.labels.tags
+  app_id                      = join("", aws_amplify_app.example.*.id)
+  branch_name                 = var.branches.branch_name
+  display_name                = var.branches.display_name
+  description                 = var.branches.description
+  framework                   = var.branches.framework
+  stage                       = var.branches.stage
+  enable_auto_build           = var.branches.enable_auto_build
+  ttl                         = var.branches.ttl
+  environment_variables       = var.branches.environment_variables
+  enable_pull_request_preview = var.branches.enable_pull_request_preview
+  tags                        = module.labels.tags
 }
 
 resource "aws_amplify_domain_association" "example" {
