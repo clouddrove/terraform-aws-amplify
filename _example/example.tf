@@ -32,7 +32,6 @@ module "amplify" {
   access_token           = "ghp_xxxxtjq0xxxxxxxoLIMuxxxxxxBJg70txxxx"            // The github access token
   sub_domain_prefix_name = "scan"
   deployment_artifacts   = "app-example-deployment"
-  ttl                    = 5
   build_spec             = <<-EOT
     version: 1
     frontend:
