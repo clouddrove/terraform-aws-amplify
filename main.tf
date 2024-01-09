@@ -1,7 +1,3 @@
-locals {
-  environments = { for k, v in var.branches : k => v if var.amplify_enabled }
-}
-
 module "labels" {
   source  = "clouddrove/labels/aws"
   version = "1.3.0"
@@ -66,7 +62,7 @@ resource "aws_amplify_app" "example" {
 resource "aws_amplify_backend_environment" "example" {
   count = var.amplify_enabled && var.backend_enable ? 1 : 0
 
-  app_id               = join("", aws_amplify_app.example.*.id)
+  app_id               = join("", aws_amplify_app.example[*].id)
   environment_name     = var.environment_name
   deployment_artifacts = var.deployment_artifacts
   stack_name           = var.stack_name
@@ -75,7 +71,7 @@ resource "aws_amplify_backend_environment" "example" {
 resource "aws_amplify_branch" "main" {
   count = var.amplify_enabled ? 1 : 0
 
-  app_id                      = join("", aws_amplify_app.example.*.id)
+  app_id                      = join("", aws_amplify_app.example[*].id)
   branch_name                 = var.branches.branch_name
   display_name                = var.branches.display_name
   description                 = var.branches.description
@@ -92,19 +88,19 @@ resource "aws_amplify_domain_association" "example" {
   count = var.amplify_enabled ? length(var.domain_name) : 0
 
 
-  app_id                = join("", aws_amplify_app.example.*.id)
+  app_id                = join("", aws_amplify_app.example[*].id)
   domain_name           = element(var.domain_name, count.index)
   wait_for_verification = false
 
   # https://example.com
   sub_domain {
-    branch_name = join("", aws_amplify_branch.main.*.branch_name)
+    branch_name = join("", aws_amplify_branch.main[*].branch_name)
     prefix      = var.sub_domain_prefix_name
   }
 
   # https://www.example.com
   sub_domain {
-    branch_name = join("", aws_amplify_branch.main.*.branch_name)
+    branch_name = join("", aws_amplify_branch.main[*].branch_name)
     prefix      = var.sub_domain_prefix_name
   }
 }
@@ -112,8 +108,8 @@ resource "aws_amplify_domain_association" "example" {
 resource "aws_amplify_webhook" "master" {
   count = var.amplify_enabled ? 1 : 0
 
-  app_id      = join("", aws_amplify_app.example.*.id)
-  branch_name = join("", aws_amplify_branch.main.*.branch_name)
+  app_id      = join("", aws_amplify_app.example[*].id)
+  branch_name = join("", aws_amplify_branch.main[*].branch_name)
   description = "triggermaster"
 
 }
