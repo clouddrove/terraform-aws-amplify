@@ -156,11 +156,6 @@ variable "stack_name" {
   default     = "amplify-app-example"
   description = "AWS CloudFormation stack name of a backend environment."
 }
-variable "ttl" {
-  type        = number
-  default     = null
-  description = "Content Time To Live (TTL) for the website in seconds."
-}
 
 variable "custom_rules" {
   type = list(object({
