@@ -36,7 +36,7 @@ prerequesties:
 providers:
   - name: aws
     url: https://aws.amazon.com/
-    version: ">= 5.45.0"
+    version: "~> 5.46.0"
 
 module_dependencies:
   - name: Labels Module
