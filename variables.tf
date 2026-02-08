@@ -21,7 +21,7 @@ variable "label_order" {
 variable "managedby" {
   type        = string
   default     = "hello@clouddrove.com"
-  description = "ManagedBy, eg 'CloudDrove'"
+  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'"
 }
 
 variable "amplify_repository" {
