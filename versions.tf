@@ -9,4 +9,8 @@ terraform {
       version = "~> 6.36.0"
     }
   }
+
+  provider_meta "aws" {
+    module_name = "clouddrove/terraform-aws-amplify"
+  }
 }
