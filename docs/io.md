@@ -36,3 +36,4 @@
 | arn | Amplify App ARN |
 | default\_domain | Amplify App domain (non-custom) |
 | name | Amplify App name |
+
